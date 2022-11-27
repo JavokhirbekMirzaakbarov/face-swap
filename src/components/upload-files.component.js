@@ -96,15 +96,14 @@ const UploadImages = () => {
           </div>
         )}
       </div>
-
-      <div className="card mt-3">
-        <div className="card-header">Swapped Image</div>
+      <h3 className="text-center">Swapped Image</h3>
+      <div className="row">
         {swappedImage1 && (
           <div className="col-6">
             <img
               style={image}
               className="preview"
-              src={`${swappedImage1}`}
+              src={swappedImage1}
               alt={"image-swapped"}
             />
           </div>
@@ -114,7 +113,7 @@ const UploadImages = () => {
             <img
               style={image}
               className="preview"
-              src={`${swappedImage2}`}
+              src={swappedImage2}
               alt={"image-swapped"}
             />
           </div>

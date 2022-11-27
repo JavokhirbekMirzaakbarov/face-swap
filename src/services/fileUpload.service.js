@@ -8,11 +8,12 @@ const upload = async (src, dst) => {
 
   const res = await http.post("/swap-faces", formData, {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "image/*",
     },
+    responseType: "blob",
   });
 
-  return URL.createObjectURL(await res.data);
+  return URL.createObjectURL(res.data);
 };
 
 export default upload;
