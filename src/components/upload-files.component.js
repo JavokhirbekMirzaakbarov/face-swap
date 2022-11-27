@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import upload from "../services/fileUpload.service.js";
 import icon from "../arrow-repeat.svg";
+import Spinner from "./Spinner";
 
 const image = {
   objectFit: "cover",
@@ -9,13 +10,15 @@ const image = {
 };
 
 const UploadImages = () => {
+  // states to store files
   const [file1, setFile1] = useState();
   const [file2, setFile2] = useState();
   const [previewImage1, setPreviewImage1] = useState();
   const [previewImage2, setPreviewImage2] = useState();
-  const [swappedImage1, setSwappedImage1] = useState();
-  const [swappedImage2, setSwappedImage2] = useState();
+  const [swappedImage, setSwappedImage] = useState();
+  const [loading, setLoading] = useState(false);
 
+  // take image 1 as input
   const handleFile1 = (event) => {
     const image1 = URL.createObjectURL(event.target.files[0]);
 
@@ -23,6 +26,7 @@ const UploadImages = () => {
     setPreviewImage1(image1);
   };
 
+  // take image 2 as input
   const handleFile2 = (event) => {
     const image1 = URL.createObjectURL(event.target.files[0]);
 
@@ -30,13 +34,15 @@ const UploadImages = () => {
     setPreviewImage2(image1);
   };
 
+  // upload images and receive swapped image
   const uploadImages = async () => {
+    setLoading(true);
     const res = await upload(file1, file2);
-    setSwappedImage1(res);
-    const res2 = await upload(file2, file1);
-    setSwappedImage2(res2);
+    setSwappedImage(res);
+    setLoading(false);
   };
 
+  // UI to show original and swapped images
   return (
     <div>
       <div className="row mt-5">
@@ -98,25 +104,19 @@ const UploadImages = () => {
       </div>
       <h3 className="text-center">Swapped Image</h3>
       <div className="row">
-        {swappedImage1 && (
-          <div className="col-6">
-            <img
-              style={image}
-              className="preview"
-              src={swappedImage1}
-              alt={"image-swapped"}
-            />
-          </div>
-        )}
-        {swappedImage2 && (
-          <div className="col-6">
-            <img
-              style={image}
-              className="preview"
-              src={swappedImage2}
-              alt={"image-swapped"}
-            />
-          </div>
+        {loading ? (
+          <Spinner />
+        ) : (
+          swappedImage && (
+            <div className="col-12">
+              <img
+                style={image}
+                className="preview"
+                src={swappedImage}
+                alt={"image-swapped"}
+              />
+            </div>
+          )
         )}
       </div>
     </div>
